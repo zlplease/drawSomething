@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.15.1",
     "konva": "^8.0.1",
+    "socket.io-client": "^4.2.0",
     "vue": "^2.6.11",
     "vue-konva": "^2.1.7",
     "vue-router": "^3.2.0",

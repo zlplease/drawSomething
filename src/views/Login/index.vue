@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { message } from 'element-ui'
+
 export default {
   data() {
     return {
@@ -34,7 +36,19 @@ export default {
 
   methods: {
     enterGame() {
-      // ...
+     this.$refs.loginForm.validate(async flag => {
+        if (!flag) return
+        const nickname = this.formData.nickname
+        const isExist = await this.$store.dispatch('checkUserExist', nickname)
+
+        if (isExist) {
+          MessageBox.alert('该昵称已被人使用啦!')
+        } else {
+          // 将昵称存入本地, 跳转到主页
+          localStorage.setItem('nickname', nickname)
+          this.$router.push('/home')
+        }
+      })
     }
   }
 }
