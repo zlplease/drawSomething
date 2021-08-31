@@ -42,9 +42,8 @@ export default {
         const isExist = await this.$store.dispatch('checkUserExist', nickname)
 
         if (isExist) {
-          MessageBox.alert('该昵称已被人使用啦!')
+          MessageBox.alert('nickname exist')
         } else {
-          // 将昵称存入本地, 跳转到主页
           localStorage.setItem('nickname', nickname)
           this.$router.push('/home')
         }

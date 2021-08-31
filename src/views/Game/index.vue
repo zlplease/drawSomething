@@ -31,7 +31,7 @@ export default {
     AppSidePanel
   },
   created() {
-
+    this.$store.dispatch('sendUserEnter')
   },
 
   methods: {
