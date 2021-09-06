@@ -3,15 +3,9 @@
     <!-- 玩家列表 -->
     <div class="panel-area">
       <ul class="participants">
-        <li>
-          <span>xxx（我）</span>
-          <el-tag size="mini">主持</el-tag>
-        </li>
-        <li>
-          <span>xxx</span>
-        </li>
-        <li>
-          <span>xxx</span>
+        <li v-for="(item, index) in nicknames" :key="index">
+          <span>{{item}} {{item === nickname ? '(我)' : ''}}</span>
+          <el-tag v-if="item === holder" size="mini">主持</el-tag>
         </li>
       </ul>
     </div>
@@ -19,22 +13,27 @@
     <!-- 按钮工具栏 -->
     <div class="panel-area button-area">
       <el-button
+        v-if="isGameStarted && nickname === holder"
         type="primary"
         size="small"
         icon="el-icon-edit"
+        @click="startGameHandler"
       >主持游戏</el-button>
 
-      <!-- <el-button
+      <el-button
+        v-if="isGameStarted && nickname === holder"
         type="warning"
         size="small"
         icon="el-icon-delete"
-      >终止游戏</el-button> -->
+        @click="stopGameHandler"
+      >终止游戏</el-button>
 
-      <!-- <el-button
+      <el-button
+        v-if="isGameStarted && nickname !== holder"
         type="success"
         size="small"
         icon="el-icon-magic-stick"
-      >猜答案</el-button> -->
+      >猜答案</el-button>
 
       <el-button
         type="danger"
@@ -77,6 +76,8 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -85,6 +86,11 @@ export default {
       answerDialogVisible: false,
       inputImageName: ''
     }
+  },
+
+  computed: {
+    ...mapState(['nicknames', 'nickname', 'holder']),
+    ...mapGetters(['isGameStarted'])
   },
 
   methods: {

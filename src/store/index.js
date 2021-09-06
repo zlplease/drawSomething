@@ -8,7 +8,8 @@ const state = {
   nickname: '',
   nicknames: [],
   holder: '',
-  lines: []
+  lines: [],
+  connected: false
 }
 
 const mutations = {
@@ -23,6 +24,15 @@ const mutations = {
   },
   updateLines (state, lines) {
     state.lines = lines || []
+  },
+  addToNicknames(state, nickname) {
+    //用户不存在才追加
+    if (!state.nicknames.includes(nickname)) {
+      state.nicknames.push(nickname)
+    }
+  },
+  updateConnected(state, flag) {
+    state.connected = flag
   }
 }
 
@@ -45,7 +55,11 @@ const actions = {
 
 }
 
-const getters = {}
+const getters = {
+  isGameStarted() {
+    return !!state.holder
+  }
+}
 
 export default new Vuex.Store({
   state,
