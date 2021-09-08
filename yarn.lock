@@ -5491,10 +5491,10 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.npm.taobao.org/kind-of/download/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha1-B8BQNKbDSfoG4k+jWqdttFgM5N0=
 
-konva@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.nlark.com/konva/download/konva-8.0.1.tgz#f34f483cdf62c36f966addc1a7484ed694313c2b"
-  integrity sha1-809IPN9iw2+Wat3Bp0hO1pQxPCs=
+konva@^8.1.3:
+  version "8.1.3"
+  resolved "https://repo.huaweicloud.com/repository/npm/konva/-/konva-8.1.3.tgz#d13627446894f954c4b78280b26757af6821b822"
+  integrity sha512-3/6fkpgQOMP4dB5qnOAZcCu4ZUmbZEg0Yy01yKEIDWUSJumGOLApTKkS5jvq9KTniijpHGAsKlz1c9fC0Kad+w==
 
 launch-editor-middleware@^2.2.1:
   version "2.2.1"
@@ -8932,8 +8932,8 @@ vue-hot-reload-api@^2.3.0:
 
 vue-konva@^2.1.7:
   version "2.1.7"
-  resolved "https://registry.npm.taobao.org/vue-konva/download/vue-konva-2.1.7.tgz#1d94471e0b6a3d4139e118a22b4c907f4a091f9c"
-  integrity sha1-HZRHHgtqPUE54RiiK0yQf0oJH5w=
+  resolved "https://repo.huaweicloud.com/repository/npm/vue-konva/-/vue-konva-2.1.7.tgz#1d94471e0b6a3d4139e118a22b4c907f4a091f9c"
+  integrity sha512-uKFp1/tGbt9HAcTXukk/PuPtCMfCSmNyU3Feo3Av4XVfcoBgVQA69+H9r2VQMX+Vwphez1qSfGf7ZNstM3nYRw==
 
 "vue-loader-v16@npm:vue-loader@^16.1.0":
   version "16.2.0"

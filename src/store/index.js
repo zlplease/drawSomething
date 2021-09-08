@@ -33,6 +33,16 @@ const mutations = {
   },
   updateConnected(state, flag) {
     state.connected = flag
+  },
+  drawNewLine(state, newLine) {
+    state.lines.push(newLine)
+  },
+  updateNewLine(state, lastLine) {
+    const line = state.lines[state.lines.length - 1]
+    line.points = lastLine.points
+  },
+  delFromNicknames (state, nickname) {
+    state.nicknames = state.nicknames.filter(item => item !== nickname)
   }
 }
 
@@ -51,6 +61,32 @@ const actions = {
     const nickname = localStorage.getItem('nickname')
     socket.emit('enter', nickname)
     context.commit('updateNickname', nickname)
+  },
+
+  sendStartGame(context, imageAnswer) {
+    socket.emit('start_game', imageAnswer)
+  },
+
+  sendStopGame (context) {
+    socket.emit('stop_game')
+  },
+
+  sendDrawNewLine(context, line) {
+    socket.emit('new_line', line)
+  },
+
+  sendUpdateNewLine(context, line) {
+    socket.emit('update_line', line)
+  },
+
+  sendAnswerGame(context, inputImageName) {
+    socket.emit('answer_game', inputImageName)
+  },
+
+  sendUserLeave(context) {
+    socket.emit('leave')
+    context.commit('updateNickname', '')
+    localStorage.removeItem('nickname')
   }
 
 }
@@ -58,6 +94,10 @@ const actions = {
 const getters = {
   isGameStarted() {
     return !!state.holder
+  },
+
+  isGameHolder(state) {
+    return state.nickname === state.holder
   }
 }
 

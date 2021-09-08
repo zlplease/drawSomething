@@ -3,8 +3,8 @@
     <!-- 玩家列表 -->
     <div class="panel-area">
       <ul class="participants">
-        <li v-for="(item, index) in nicknames" :key="index">
-          <span>{{item}} {{item === nickname ? '(我)' : ''}}</span>
+        <li v-for="item in nicknames" :key="item">
+          <span>{{ item }} {{ item === nickname ? '（我）' : '' }}</span>
           <el-tag v-if="item === holder" size="mini">主持</el-tag>
         </li>
       </ul>
@@ -13,7 +13,7 @@
     <!-- 按钮工具栏 -->
     <div class="panel-area button-area">
       <el-button
-        v-if="isGameStarted && nickname === holder"
+        v-if="!isGameStarted"
         type="primary"
         size="small"
         icon="el-icon-edit"
@@ -33,12 +33,14 @@
         type="success"
         size="small"
         icon="el-icon-magic-stick"
+        @click="answerGameHandler"
       >猜答案</el-button>
 
       <el-button
         type="danger"
         size="small"
         icon="el-icon-switch-button"
+        @click="exitHandler"
       >退出游戏</el-button>
     </div>
 
@@ -76,7 +78,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   data() {
@@ -89,14 +91,66 @@ export default {
   },
 
   computed: {
-    ...mapState(['nicknames', 'nickname', 'holder']),
+    ...mapState(['nickname', 'nicknames', 'holder']),
     ...mapGetters(['isGameStarted'])
   },
 
   methods: {
-    saveDialogHandler() {},
+    startGameHandler() {
+      // 开始游戏
+      // 1. 显示弹框
+      this.resultDialogVisible = true
+      // 2. 清空输入框内容
+      this.expectImageName = ''
+    },
 
-    saveAnswerDialogHandler() {}
+    stopGameHandler() {
+      this.$confirm('确定要终止游戏吗?', '温馨提示').then(() => {
+        // 发送游戏终止申请
+        this.$store.dispatch('sendStopGame')
+      }).catch(e => {
+        console.log(e)
+      })
+    },
+
+    answerGameHandler() {
+      this.answerDialogVisible = true
+      this.inputImageName = ''
+    },
+
+    saveDialogHandler() {
+      // 1. 校验答案是否为空
+      if (!this.expectImageName) {
+        this.$message.error('答案不能为空哦!')
+        return
+      }
+      // 2. 发送开始游戏的申请
+      this.$store.dispatch('sendStartGame', this.expectImageName)
+
+      // 3. 关闭弹框
+      this.resultDialogVisible = false
+    },
+
+    saveAnswerDialogHandler() {
+      // 1. 检查答案是否为空
+      if (!this.inputImageName) {
+        this.$message.error('答案不能为空')
+        return
+      }
+      // 2. 将答案发送到服务器
+      this.$store.dispatch('sendAnswerGame', this.inputImageName)
+      // 3. 关闭弹出框
+      this.answerDialogVisible = false
+    },
+
+    exitHandler() {
+      this.$confirm('是否退出游戏', '温馨提示').then(() => {
+        this.$store.dispatch('sendUserLeave')
+        this.$router.replace('/login')
+      }).catch(e => {
+        console.log(e)
+      })
+    }
   }
 }
 </script>
